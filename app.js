@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const md5 = require("blueimp-md5");
 
-const { getStoredPosts, storePosts } = require('./data/products');
+const { getStoredProducts, storedProducts } = require('./data/products');
 
 const app = express();
 
@@ -12,35 +12,34 @@ app.use((req, res, next) => {
   // Attach CORS headers
   // Required when using a detached backend (that runs on a different domain)
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
 
-app.get('/posts', async (req, res) => {
-  const storedPosts = await getStoredPosts();
+app.get('/products', async (req, res) => {
+  const storedProducts = await getStoredProducts();
   // await new Promise((resolve, reject) => setTimeout(() => resolve(), 1500));
-  res.json({ posts: storedPosts });
+  res.json({ products: storedProducts });
   res.status(200);
 });
 
-app.get('/posts/:id', async (req, res) => {
-  const storedPosts = await getStoredPosts();
-  const post = storedPosts.find((post) => post.id === req.params.id);
-  res.json({ post });
+app.get('/products/:id', async (req, res) => {
+  const storedProducts = await getStoredProducts();
+  const product = storedProducts.find((product) => product.id === req.params.id);
+  res.json({ product });
 });
 
-app.post('/posts', async (req, res) => {
-  const existingPosts = await getStoredPosts();
-  const postData = req.body;
-  const newPost = {
-    ...postData,
-    //id: Math.random().toString(),
+app.post('/products', async (req, res) => {
+  const existingProducts = await getStoredProducts();
+  const productData = req.body;
+  const newProduct = {
+    ...productData,
     id: md5(req.body.body),
   };
-  const updatedPosts = [newPost, ...existingPosts];
-  await storePosts(updatedPosts);
-  res.status(201).json({ message: 'Stored new post.', post: newPost });
+  const updatedProducts = [newProduct, ...existingProducts];
+  await storedProducts(updatedProducts);
+  res.status(201).json({ message: 'Stored new post.', post: newProduct });
 });
 
 console.log("Listening on port 8080...")
