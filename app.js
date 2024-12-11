@@ -26,7 +26,10 @@ app.get('/products', async (req, res) => {
 
 app.get('/products/:id', async (req, res) => {
   const storedProducts = await getStoredProducts();
-  const product = storedProducts.find((product) => product.id === req.params.id);
+  console.log(storedProducts);
+  console.log(req.params.id);
+  const product = storedProducts.find((product) => product.id == req.params.id);
+  console.log(product);
   res.json({ product });
 });
 
@@ -34,8 +37,8 @@ app.post('/products', async (req, res) => {
   const existingProducts = await getStoredProducts();
   const productData = req.body;
   const newProduct = {
-    ...productData,
-    id: md5(req.body.body),
+    id: md5(req.body.description+Date.now),
+    ...productData
   };
   const updatedProducts = [newProduct, ...existingProducts];
   await storedProducts(updatedProducts);
