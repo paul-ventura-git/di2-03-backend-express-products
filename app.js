@@ -28,18 +28,19 @@ app.get('/products/:id', async (req, res) => {
   const storedProducts = await getStoredProducts();
   const product = storedProducts.find((product) => product.id == req.params.id);
   res.json({ product });
+  res.status(206);
 });
 
 app.post('/products', async (req, res) => {
   const existingProducts = await getStoredProducts();
   const productData = req.body;
   const newProduct = {
-    id: md5(req.body.description+Date.now),
+    id: md5(req.body.description+Date.now()),
     ...productData
   };
   const updatedProducts = [newProduct, ...existingProducts];
   await storeProducts(updatedProducts);
-  res.status(201).json({ message: 'Stored new post.', post: newProduct });
+  res.status(201).json({ message: 'Stored new product.', product: newProduct });
 });
 
 console.log("Listening on port 8080...")
