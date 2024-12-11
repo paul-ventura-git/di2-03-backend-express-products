@@ -26,10 +26,7 @@ app.get('/products', async (req, res) => {
 
 app.get('/products/:id', async (req, res) => {
   const storedProducts = await getStoredProducts();
-  console.log(storedProducts);
-  console.log(req.params.id);
   const product = storedProducts.find((product) => product.id == req.params.id);
-  console.log(product);
   res.json({ product });
 });
 
