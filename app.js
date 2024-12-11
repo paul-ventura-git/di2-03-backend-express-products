@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const md5 = require("blueimp-md5");
 
-const { getStoredProducts, storedProducts } = require('./data/products');
+const { getStoredProducts, storeProducts } = require('./data/products');
 
 const app = express();
 
@@ -38,7 +38,7 @@ app.post('/products', async (req, res) => {
     ...productData
   };
   const updatedProducts = [newProduct, ...existingProducts];
-  await storedProducts(updatedProducts);
+  await storeProducts(updatedProducts);
   res.status(201).json({ message: 'Stored new post.', post: newProduct });
 });
 

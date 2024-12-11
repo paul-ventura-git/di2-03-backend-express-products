@@ -8,9 +8,9 @@ async function getStoredProducts() {
 }
 
 // Escribir un nuevo product
-function storedProducts(products) {
+function storeProducts(products) {
   return fs.writeFile('products.json', JSON.stringify({ products: products || [] }));
 }
 
 exports.getStoredProducts = getStoredProducts;
-exports.storedProducts = storedProducts;
+exports.storeProducts = storeProducts;
