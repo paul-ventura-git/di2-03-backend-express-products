@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const md5 = require("blueimp-md5");
 
 const { getStoredProducts, storeProducts } = require('./data/products');
+const {getStoredCustomers, storeCustomers } = require("./data/customers");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use((req, res, next) => {
   next();
 });
 
+// Rutas para PRODUCTS
 app.get('/products', async (req, res) => {
   const storedProducts = await getStoredProducts();
   // await new Promise((resolve, reject) => setTimeout(() => resolve(), 1500));
@@ -26,9 +28,8 @@ app.get('/products', async (req, res) => {
 
 app.get('/products/:id', async (req, res) => {
   const storedProducts = await getStoredProducts();
-  const product = storedProducts.find((product) => product.id == req.params.id);
+  const product = storedProducts.find((product) => product.id === req.params.id);
   res.json({ product });
-  res.status(206);
 });
 
 app.post('/products', async (req, res) => {
@@ -41,6 +42,32 @@ app.post('/products', async (req, res) => {
   const updatedProducts = [newProduct, ...existingProducts];
   await storeProducts(updatedProducts);
   res.status(201).json({ message: 'Stored new product.', product: newProduct });
+});
+
+// Rutas para CUSTOMERS
+app.get('/customers', async (req, res) => {
+  const storedCustomers = await getStoredCustomers();
+  // await new Promise((resolve, reject) => setTimeout(() => resolve(), 1500));
+  res.json({ customers: storedCustomers });
+  res.status(200);
+});
+
+app.get('/customers/:id', async (req, res) => {
+  const storedCustomers = await getStoredCustomers();
+  const customer = storedCustomers.find((customer) => customer.id === req.params.id);
+  res.json({ customer });
+});
+
+app.post('/customers', async (req, res) => {
+  const existingCustomers = await getStoredCustomers();
+  const customersData = req.body;
+  const newCustomer = {
+    id: md5(req.body.description+Date.now()),
+    ...customersData
+  };
+  const updatedCustomers = [newCustomer, ...existingCustomers];
+  await storeCustomers(updatedCustomers);
+  res.status(201).json({ message: 'Stored new customer.', customer: newCustomer });
 });
 
 console.log("Listening on port 8080...")
