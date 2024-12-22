@@ -60,14 +60,35 @@ app.get('/customers/:id', async (req, res) => {
 
 app.post('/customers', async (req, res) => {
   const existingCustomers = await getStoredCustomers();
-  const customersData = req.body;
+  const customerData = req.body;
   const newCustomer = {
-    id: md5(req.body.description+Date.now()),
-    ...customersData
+    id: md5(req.body.email+Date.now()),
+    ...customerData
   };
   const updatedCustomers = [newCustomer, ...existingCustomers];
   await storeCustomers(updatedCustomers);
   res.status(201).json({ message: 'Stored new customer.', customer: newCustomer });
+});
+
+app.put('/customers/:id', async (req, res) => {
+  const customerData = await getStoredCustomers();
+  const customerIndex = customerData.findIndex(item => item.id === req.params.id);
+
+  const customer =
+      customerData.find(
+          item => item.id === req.params.id
+      );
+  if (!customer) return res.status(404).send('This customer was not found.');
+
+  customer.name = req.body.name;
+  customer.phone = req.body.phone;
+  customer.email = req.body.email;
+  customer.address = req.body.address;
+
+  customerData[customerIndex] = customer;
+
+  await storeCustomers(customerData);
+  res.json(customer);
 });
 
 console.log("Listening on port 8080...")

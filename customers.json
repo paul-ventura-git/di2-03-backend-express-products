@@ -1,1 +1,25 @@
-{"customers":[{"id":"7ecfb3bf076a6a9635f975fe96ac97fd","name":"Alberto Bustinza","email":"abustinza@aol.com","phone":"999777444","address":"Calle los Guindos Mz C Lt 8"}]}
+{
+  "customers": [
+    {
+      "id": "99391cae50f2cf9ccafd479862f95d13",
+      "name": "Graciela Bustinza",
+      "phone": "999888777",
+      "email": "gobando@aol.com",
+      "address": "Los Pinos 509. Urb. Santa Mónica"
+    },
+    {
+      "id": "8a50460e755c701b4c1054441f853577",
+      "name": "Humberto Oyarce",
+      "email": "hoyarce@abc.com",
+      "phone": "999888555",
+      "address": "Calle los Naranjos Mz G Lt 8"
+    },
+    {
+      "id": "7ecfb3bf076a6a9635f975fe96ac97fd",
+      "name": "Alberto Bustinza",
+      "email": "abustinza@aol.com",
+      "phone": "999777444",
+      "address": "Calle los Guindos Mz C Lt 8"
+    }
+  ]
+}
