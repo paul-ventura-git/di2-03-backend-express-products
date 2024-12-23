@@ -91,5 +91,13 @@ app.put('/customers/:id', async (req, res) => {
   res.json(customer);
 });
 
+app.delete('/customers/:id', async (req, res) => {
+  const customerData = await getStoredCustomers();
+  customers = customerData
+      .filter(item => item.id !== req.params.id);
+  await storeCustomers(customers);
+  res.status(204).send();
+});
+
 console.log("Listening on port 8080...")
 app.listen(8080);
