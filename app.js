@@ -66,7 +66,7 @@ app.put('/products/:id', async (req, res) => {
 
   productsData[productIndex] = product;
 
-  await storeCustomers(productsData);
+  await storeProducts(productsData);
   res.json(product);
 });
 
@@ -114,10 +114,10 @@ app.put('/customers/:id', async (req, res) => {
       );
   if (!customer) return res.status(404).send('This customer was not found.');
 
-  customer.name = req.body.name;
-  customer.phone = req.body.phone;
-  customer.email = req.body.email;
-  customer.address = req.body.address;
+  customer.name     = req.body.name;
+  customer.phone    = req.body.phone;
+  customer.email    = req.body.email;
+  customer.address  = req.body.address;
 
   customerData[customerIndex] = customer;
 

@@ -1,6 +1,18 @@
 {
   "products": [
     {
+      "id": "0efefccad14797535066c513d1abd592",
+      "title": "Producto5",
+      "description": "Polera a rayas de invierno",
+      "category": "Ropa",
+      "price": "30.15",
+      "discount": "0.2",
+      "rating": "6",
+      "stock": "9",
+      "brand": "O'Neill",
+      "weight": "300"
+    },
+    {
       "id": "67b3b48b6ad4c53b3e5cb857cc15d5d8",
       "title": "Producto4",
       "description": "Suéter naranja con mangas azules",
