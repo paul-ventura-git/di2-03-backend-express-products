@@ -72,7 +72,7 @@ app.put('/products/:id', async (req, res) => {
 
 app.delete('/products/:id', async (req, res) => {
   const productsData = await getStoredProducts();
-  products = productsData
+  const products = productsData
       .filter(item => item.id !== req.params.id);
   await storeProducts(products);
   res.status(204).send();
