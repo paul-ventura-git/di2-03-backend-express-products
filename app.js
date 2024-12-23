@@ -44,6 +44,40 @@ app.post('/products', async (req, res) => {
   res.status(201).json({ message: 'Stored new product.', product: newProduct });
 });
 
+app.put('/products/:id', async (req, res) => {
+  const productsData = await getStoredProducts();
+  const productIndex = productsData.findIndex(item => item.id === req.params.id);
+
+  const product =
+      productsData.find(
+          item => item.id === req.params.id
+      );
+  if (!product) return res.status(404).send('This product was not found.');
+
+  product.title        = req.body.title;
+  product.description  = req.body.description;
+  product.category     = req.body.category;
+  product.price        = req.body.price;
+  product.discount     = req.body.discount;
+  product.rating       = req.body.rating;
+  product.stock        = req.body.stock;
+  product.brand        = req.body.brand;
+  product.weight       = req.body.weight;
+
+  productsData[productIndex] = product;
+
+  await storeCustomers(productsData);
+  res.json(product);
+});
+
+app.delete('/products/:id', async (req, res) => {
+  const productsData = await getStoredProducts();
+  products = productsData
+      .filter(item => item.id !== req.params.id);
+  await storeProducts(products);
+  res.status(204).send();
+});
+
 // Rutas para CUSTOMERS
 app.get('/customers', async (req, res) => {
   const storedCustomers = await getStoredCustomers();
