@@ -81,7 +81,7 @@ app.delete('/products/:id', async (req, res) => {
 
 // Rutas para CUSTOMERS
 app.get('/customers', async (req, res) => {
-  const storedCustomers = await getStoredPublicaciones();
+  const storedCustomers = await getStoredCustomers();
   // await new Promise((resolve, reject) => setTimeout(() => resolve(), 1500));
   res.json({ customers: storedCustomers });
   res.status(200);
