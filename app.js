@@ -4,6 +4,7 @@ const md5 = require("blueimp-md5");
 
 const { getStoredProducts, storeProducts } = require('./data/products');
 const {getStoredCustomers, storeCustomers } = require("./data/customers");
+const {getStoredPublicaciones, storePublicaciones } = require("./data/publications");
 
 const app = express();
 
@@ -80,7 +81,7 @@ app.delete('/products/:id', async (req, res) => {
 
 // Rutas para CUSTOMERS
 app.get('/customers', async (req, res) => {
-  const storedCustomers = await getStoredCustomers();
+  const storedCustomers = await getStoredPublicaciones();
   // await new Promise((resolve, reject) => setTimeout(() => resolve(), 1500));
   res.json({ customers: storedCustomers });
   res.status(200);
@@ -132,6 +133,62 @@ app.delete('/customers/:id', async (req, res) => {
   await storeCustomers(customers);
   res.status(204).send();
 });
+
+// Rutas para PUBLICACIONES
+app.get('/publicaciones', async (req, res) => {
+  const storedPublicaciones = await getStoredCustomers();
+  // await new Promise((resolve, reject) => setTimeout(() => resolve(), 1500));
+  res.json({ publicaciones: storedPublicaciones });
+  res.status(200);
+});
+
+app.get('/customers/:id', async (req, res) => {
+  const storedCustomers = await getStoredCustomers();
+  const customer = storedCustomers.find((customer) => customer.id === req.params.id);
+  res.json({ customer });
+});
+
+app.post('/customers', async (req, res) => {
+  const existingCustomers = await getStoredCustomers();
+  const customerData = req.body;
+  const newCustomer = {
+    id: md5(req.body.email+Date.now()),
+    ...customerData
+  };
+  const updatedCustomers = [newCustomer, ...existingCustomers];
+  await storePublicaciones(updatedCustomers);
+  res.status(201).json({ message: 'Stored new customer.', customer: newCustomer });
+});
+
+app.put('/customers/:id', async (req, res) => {
+  const customerData = await getStoredCustomers();
+  const customerIndex = customerData.findIndex(item => item.id === req.params.id);
+
+  const customer =
+      customerData.find(
+          item => item.id === req.params.id
+      );
+  if (!customer) return res.status(404).send('This customer was not found.');
+
+  customer.name     = req.body.name;
+  customer.phone    = req.body.phone;
+  customer.email    = req.body.email;
+  customer.address  = req.body.address;
+
+  customerData[customerIndex] = customer;
+
+  await storeCustomers(customerData);
+  res.json(customer);
+});
+
+app.delete('/customers/:id', async (req, res) => {
+  const customerData = await getStoredCustomers();
+  customers = customerData
+      .filter(item => item.id !== req.params.id);
+  await storeCustomers(customers);
+  res.status(204).send();
+});
+
 
 console.log("Listening on port 8080...")
 app.listen(8080);

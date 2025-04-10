@@ -1,5 +1,1 @@
-{
-  "customers": [
-
-  ]
-}
+{"customers":[{"id":"f896baa4ae9dd0c5dacc6f5d42a1f1c4","name":"Juan Perez","phone":"999888777","email":"fjventura@idat.pe","address":""},{"id":"a25646530e700735a72c3cfd8aa900ff","name":"Juan Pérez","phone":"999888888","email":"j.perez@abc.com","address":"abc"}]}
