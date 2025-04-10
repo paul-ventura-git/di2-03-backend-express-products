@@ -4,7 +4,7 @@ const md5 = require("blueimp-md5");
 
 const { getStoredProducts, storeProducts } = require('./data/products');
 const {getStoredCustomers, storeCustomers } = require("./data/customers");
-const {getStoredPublicaciones, storePublicaciones } = require("./data/publications");
+const {getStoredPublications, storePublications } = require("./data/publications");
 
 const app = express();
 
@@ -135,50 +135,50 @@ app.delete('/customers/:id', async (req, res) => {
 });
 
 // Rutas para PUBLICACIONES
-app.get('/publicaciones', async (req, res) => {
-  const storedPublicaciones = await getStoredCustomers();
+app.get('/publications', async (req, res) => {
+  const storedPublications = await getStoredPublications();
   // await new Promise((resolve, reject) => setTimeout(() => resolve(), 1500));
-  res.json({ publicaciones: storedPublicaciones });
+  res.json({ publications: storedPublications });
   res.status(200);
 });
 
-app.get('/customers/:id', async (req, res) => {
-  const storedCustomers = await getStoredCustomers();
-  const customer = storedCustomers.find((customer) => customer.id === req.params.id);
-  res.json({ customer });
+app.get('/publications/:id', async (req, res) => {
+  const storedPublications = await getStoredPublications();
+  const publication = storedPublications.find((publication) => publication.id === req.params.id);
+  res.json({ publication });
 });
 
-app.post('/customers', async (req, res) => {
-  const existingCustomers = await getStoredCustomers();
-  const customerData = req.body;
-  const newCustomer = {
-    id: md5(req.body.email+Date.now()),
-    ...customerData
+app.post('/publications', async (req, res) => {
+  const existingPublications = await getStoredPublications();
+  const publicationData = req.body;
+  const newPublication = {
+    id: md5(req.body.body+Date.now()),
+    ...publicationData
   };
-  const updatedCustomers = [newCustomer, ...existingCustomers];
-  await storePublicaciones(updatedCustomers);
-  res.status(201).json({ message: 'Stored new customer.', customer: newCustomer });
+  const updatedPublications = [newPublication, ...existingPublications];
+  await storePublications(updatedPublications);
+  res.status(201).json({ message: 'Stored new publication.', publication: newPublication });
 });
 
-app.put('/customers/:id', async (req, res) => {
-  const customerData = await getStoredCustomers();
-  const customerIndex = customerData.findIndex(item => item.id === req.params.id);
+app.put('/publications/:id', async (req, res) => {
+  const publicationData = await getStoredPublications();
+  const publicationIndex = publicationData.findIndex(item => item.id === req.params.id);
 
-  const customer =
-      customerData.find(
+  const publication =
+      publicationData.find(
           item => item.id === req.params.id
       );
-  if (!customer) return res.status(404).send('This customer was not found.');
+  if (!publication) return res.status(404).send('This publication was not found.');
 
-  customer.name     = req.body.name;
-  customer.phone    = req.body.phone;
-  customer.email    = req.body.email;
-  customer.address  = req.body.address;
+  publication.title   = req.body.title;
+  publication.body    = req.body.body;
+  publication.views   = req.body.views;
+  publication.userId  = req.body.userId;
 
-  customerData[customerIndex] = customer;
+  publicationData[publicationIndex] = publication;
 
-  await storeCustomers(customerData);
-  res.json(customer);
+  await storePublications(publicationData);
+  res.json(publication);
 });
 
 app.delete('/customers/:id', async (req, res) => {
