@@ -1,1 +1,10 @@
-{"todos":[{"id":"7ecfb3bf076a6a9635f975fe96ac97fd","todo":"Esta es la, digamos, segunda tarea","completed":false,"userId":"55"}]}
+{
+  "todos": [
+    {
+      "id": "7ecfb3bf076a6a9635f975fe96ac97fd",
+      "todo": "Esta es la, digamos, segunda tarea",
+      "completed": false,
+      "userId": "55"
+    }
+  ]
+}
