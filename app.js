@@ -5,6 +5,7 @@ const md5 = require("blueimp-md5");
 const { getStoredProducts, storeProducts } = require('./data/products');
 const {getStoredCustomers, storeCustomers } = require("./data/customers");
 const {getStoredPublications, storePublications } = require("./data/publications");
+const {getStoredTodos, storeTodos } = require("./data/todos");
 
 const app = express();
 
@@ -189,6 +190,58 @@ app.delete('/customers/:id', async (req, res) => {
   res.status(204).send();
 });
 
+// Rutas para TAREAS (TO-DOs)
+app.get('/todos', async (req, res) => {
+  const storedTodos = await getStoredTodos();
+  res.json({ todos: storedTodos });
+  res.status(200);
+});
+
+app.get('/todos/:id', async (req, res) => {
+  const storedTodos = await getStoredTodos();
+  const todo = storedTodos.find((todo) => todo.id === req.params.id);
+  res.json({ todo });
+});
+
+app.post('/todos', async (req, res) => {
+  const existingTodos = await getStoredTodos();
+  const todoData = req.body;
+  const newTodo = {
+    id: md5(req.body.body+Date.now()),
+    ...todoData
+  };
+  const updatedTodos = [newTodo, ...existingTodos];
+  await storeTodos(updatedTodos);
+  res.status(201).json({ message: 'Stored new todo.', todo: newTodo });
+});
+
+app.put('/todos/:id', async (req, res) => {
+  const todoData = await getStoredTodos();
+  const todoIndex = todoData.findIndex(item => item.id === req.params.id);
+
+  const todo =
+      todoData.find(
+          item => item.id === req.params.id
+      );
+  if (!todo) return res.status(404).send('This todo was not found.');
+
+  todo.todo       = req.body.todo;
+  todo.completed  = req.body.completed;
+  todo.userId     = req.body.userId;
+
+  todoData[todoIndex] = todo;
+
+  await storeTodos(todoData);
+  res.json(todo);
+});
+
+app.delete('/todos/:id', async (req, res) => {
+  const todoData = await getStoredTodos();
+  todos = todoData
+      .filter(item => item.id !== req.params.id);
+  await storeTodos(todos);
+  res.status(204).send();
+});
 
 console.log("Listening on port 8080...")
 app.listen(8080);

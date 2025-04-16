@@ -1,6 +1,13 @@
 {
   "publications": [
     {
+      "id": "806253475960535b7234dcc049c69762",
+      "title": "Nueva noticia de hoy",
+      "body": "Esto es el contenido de una noticia del día de hoy que es muy interesante",
+      "views": "0",
+      "userId": "4456"
+    },
+    {
       "id": "579e524db3fd905db25c63b840905cbb",
       "title": "Segunda Publicación",
       "body": "He was an expert but not in a discipline that anyone could fully appreciate. He knew how to hold the cone just right so that the soft server ice-cream fell into it at the precise angle to form a perfect cone each and every time. It had taken years to perfect and he could now do it without even putting any thought behind it.",
