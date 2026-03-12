@@ -1,0 +1,46 @@
+{
+  "customers": [
+    {
+      "id": "bf546981feea65fe96bb67e3a3f701dc",
+      "name": "Adalberto Ramones",
+      "email": "adal@televisa.com",
+      "phone": "555111778",
+      "address": "Los Sauces 157. Urb. Aurora"
+    },
+    {
+      "id": "7542d48a6984bc08edb06bc86b9fc13a",
+      "name": "Roberto",
+      "email": "rob@abc.com",
+      "phone": "999888777",
+      "address": "Calle Los Arces s/n"
+    },
+    {
+      "id": "952104fed4bc564e913c73255aa00dbf",
+      "name": "Gastón Acurio",
+      "email": "gacurio@alicorp.com",
+      "phone": "999111444",
+      "address": "Avenida Las Palmas Magisteriales 4455"
+    },
+    {
+      "id": "e40026152cf892b9c0a73f455785d262",
+      "name": "Fernando Llosa",
+      "email": "fllosa@intel.uk",
+      "phone": "999888444",
+      "address": "abc"
+    },
+    {
+      "id": "0338a5ff8c982023b37b013c7960e3b1",
+      "name": "Friedrich McGregor",
+      "email": "fmcgregor@mercadolibre.com",
+      "phone": "999000444",
+      "address": "Calle los Geranios Mz G Lt 8"
+    },
+    {
+      "id": "dc9984c2377aa18c2cb00b6ae410376e",
+      "name": "Alfonso Ayquipa",
+      "email": "aayquipa@ey.com",
+      "phone": "999000555",
+      "address": "Calle los Robles Mz G Lt 8"
+    }
+  ]
+}
