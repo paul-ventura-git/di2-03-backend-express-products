@@ -9,7 +9,7 @@ async function getStoredOrders() {
 
 // Escribir un nuevo customer
 function storeOrders(orders) {
-    return fs.writeFile('orders.json', JSON.stringify({ orders: orders || [] }));
+    return fs.writeFile('data/orders.json', JSON.stringify({ orders: orders || [] }));
 }
 
 exports.getStoredOrders = getStoredOrders;

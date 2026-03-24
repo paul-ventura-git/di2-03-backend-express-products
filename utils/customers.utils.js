@@ -9,7 +9,7 @@ async function getStoredCustomers() {
 
 // Escribir un nuevo customer
 function storeCustomers(customers) {
-    return fs.writeFile('customers.json', JSON.stringify({ customers: customers || [] }));
+    return fs.writeFile('data/customers.json', JSON.stringify({ customers: customers || [] }));
 }
 
 exports.getStoredCustomers = getStoredCustomers;
